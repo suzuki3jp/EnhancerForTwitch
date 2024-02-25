@@ -1,0 +1,12 @@
+{
+  "name": "enhancerfortwitch",
+  "version": "0.0.1",
+  "description": "Enhancer for Twitch.tv",
+  "private": "true",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT"
+
+}
