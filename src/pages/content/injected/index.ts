@@ -87,17 +87,24 @@ class TwitchVideo {
     this.player = this.getCurrentVideo();
   }
 
+  public getCurrentVolume() {
+    return this.player.volume;
+  }
+
   public incrementVolume() {
     const currentVolume = this.player.volume * 100;
-    const newVolume = currentVolume + 1;
+    let newVolume = currentVolume + 1;
+
+    if (newVolume > 100) newVolume = 100;
 
     this.changeVolume(newVolume);
     return newVolume;
   }
   public decrementVolume() {
     const currentVolume = this.player.volume * 100;
-    const newVolume = currentVolume - 1;
+    let newVolume = currentVolume - 1;
 
+    if (newVolume < 0) newVolume = 0;
     this.changeVolume(newVolume);
     return newVolume;
   }
@@ -133,6 +140,48 @@ class TwitchVideo {
   }
 }
 
+class VolumeOverlay {
+  private parentOverlay = document.querySelector<HTMLDivElement>('.click-handler');
+  private overlay: HTMLDivElement;
+
+  constructor(defaultVolume: number | string = 0) {
+    this.overlay = this.createOverlay(Math.floor(Number(defaultVolume)));
+    this.putOverlay();
+  }
+
+  public changeText(volume: number | string) {
+    this.overlay.textContent = String(Math.floor(Number(volume)));
+  }
+
+  private putOverlay() {
+    this.parentOverlay.appendChild(this.overlay);
+  }
+
+  public showOverlay() {
+    this.overlay.style.display = 'table-cell';
+  }
+
+  public hideOverlay() {
+    this.overlay.style.display = 'none';
+  }
+
+  private createOverlay(defaultValue: number | string) {
+    this.parentOverlay.style.position = 'relative';
+    const e = document.createElement('div');
+    e.textContent = String(defaultValue);
+    e.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+    e.style.position = 'absolute';
+    e.style.top = '0';
+    e.style.display = 'none';
+    e.style.height = '10%';
+    e.style.width = '100%';
+    e.style.textAlign = 'center';
+    e.style.verticalAlign = 'middle';
+    e.style.fontSize = '50px';
+    return e;
+  }
+}
+
 (() => {
   console.log('Content scripts loaded');
   const currentLocation = new URL(location.href);
@@ -141,20 +190,21 @@ class TwitchVideo {
   if (locationWhitelist.includes(currentLocation.host)) {
     console.log('Twitch.tv now');
     const video = new TwitchVideo();
+    const overlay = new VolumeOverlay(video.getCurrentVolume());
     new RightClickScroll({
       start: () => {
-        console.log('Scroll start');
+        overlay.showOverlay();
       },
       end: () => {
-        console.log('Scroll end');
+        overlay.hideOverlay();
       },
       scrollUp: () => {
-        console.log('Scroll Up');
-        console.log(video.incrementVolume());
+        const volume = video.incrementVolume();
+        overlay.changeText(volume);
       },
       scrollDown: () => {
-        console.log('Scroll Down');
-        console.log(video.decrementVolume());
+        const volume = video.decrementVolume();
+        overlay.changeText(volume);
       },
     });
   } else {
