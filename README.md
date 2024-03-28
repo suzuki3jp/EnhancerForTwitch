@@ -3,4 +3,4 @@
 1. Download from Github Release
 2. Access to `chrome://extensions/`
 3. Click that Developer mode toggle.
-4. Click Load unpacked and select the downloaded `EnhancerForTwitchtv` directory.
+4. Click Load unpacked and select the downloaded `EnhancerForTwitch` directory.
