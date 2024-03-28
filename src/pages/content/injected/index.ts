@@ -183,12 +183,10 @@ class VolumeOverlay {
 }
 
 (() => {
-  console.log('Content scripts loaded');
   const currentLocation = new URL(location.href);
   const locationWhitelist = ['www.twitch.tv'];
 
   if (locationWhitelist.includes(currentLocation.host)) {
-    console.log('Twitch.tv now');
     const video = new TwitchVideo();
     const overlay = new VolumeOverlay(video.getCurrentVolume());
     new RightClickScroll({
@@ -207,7 +205,5 @@ class VolumeOverlay {
         overlay.changeText(volume);
       },
     });
-  } else {
-    console.log('isnot twitch.tv now');
   }
 })();
