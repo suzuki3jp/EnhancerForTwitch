@@ -1,0 +1,10 @@
+{
+  "extensionDescription": {
+    "description": "Extension description",
+    "message": "Enhance user experience at Twitch.tv"
+  },
+  "extensionName": {
+    "description": "Extension name",
+    "message": "Enhancer for Twitch.tv"
+  }
+}
