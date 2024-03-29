@@ -85,6 +85,7 @@ class TwitchVideo {
 
   constructor() {
     this.player = this.getCurrentVideo();
+    if (!this.player) console.error('EnhancerForTwitchError: Get video player failed.');
   }
 
   public getCurrentVolume() {
@@ -173,11 +174,11 @@ class VolumeOverlay {
     e.style.position = 'absolute';
     e.style.top = '0';
     e.style.display = 'none';
-    e.style.height = '10%';
+    e.style.height = '5%';
     e.style.width = '100%';
     e.style.textAlign = 'center';
     e.style.verticalAlign = 'middle';
-    e.style.fontSize = '50px';
+    e.style.fontSize = '25px';
     return e;
   }
 }
