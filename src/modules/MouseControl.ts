@@ -17,11 +17,17 @@ export class MouseControl extends TwitchVideo {
       end: [],
       up: [],
       down: [],
+      click: [],
     };
 
     document.addEventListener('mouseup', e => this.mouseupHandler(e));
     document.addEventListener('mousedown', e => this.mousedownHandler(e));
     document.addEventListener('wheel', e => this.wheelHandler(e), { passive: false });
+    document.addEventListener('click', e => this.clickHandler(e));
+  }
+
+  private clickHandler(event: MouseEvent) {
+    if (this.isOnElement(event) && this.isRightClickDown) this.listeners.click.forEach(l => l());
   }
 
   private mouseupHandler(event: MouseEvent) {
@@ -77,6 +83,6 @@ export class MouseControl extends TwitchVideo {
   }
 }
 
-export type ScrollEvents = 'start' | 'end' | 'up' | 'down';
+export type ScrollEvents = 'start' | 'end' | 'up' | 'down' | 'click';
 
 export type ScrollEventListener = () => void;

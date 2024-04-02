@@ -21,5 +21,9 @@ export class VolumeController {
       const volume = video.decrementVolume();
       overlay.changeText(volume);
     });
+    scroll.addEventListener('click', () => {
+      const volume = video.toggleMute();
+      overlay.changeText(volume);
+    });
   }
 }
