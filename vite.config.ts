@@ -33,8 +33,6 @@ export default defineConfig({
     rollupOptions: {
       input: {
         contentInjected: resolve(pagesDir, 'content', 'injected', 'index.ts'),
-        contentStyle: resolve(pagesDir, 'content', 'style.scss'),
-        popup: resolve(pagesDir, 'popup', 'index.html'),
       },
       output: {
         entryFileNames: 'src/pages/[name]/index.js',
@@ -46,11 +44,5 @@ export default defineConfig({
         },
       },
     },
-  },
-  test: {
-    globals: true,
-    environment: 'jsdom',
-    include: ['**/*.test.ts', '**/*.test.tsx'],
-    setupFiles: './test-utils/vitest.setup.js',
   },
 });

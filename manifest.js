@@ -16,15 +16,10 @@ const manifest = {
   version: packageJson.version,
   description: '__MSG_extensionDescription__',
   permissions: ['storage'],
-  action: {
-    default_popup: 'src/pages/popup/index.html',
-  },
   content_scripts: [
     {
       matches: ['http://*/*', 'https://*/*', '<all_urls>'],
       js: ['src/pages/contentInjected/index.js'],
-      // KEY for cache invalidation
-      css: ['assets/css/contentStyle<KEY>.chunk.css'],
     },
   ],
   web_accessible_resources: [
