@@ -1,6 +1,6 @@
 export * from './Element';
 
-export * from './Scroll';
+export * from './MouseControl';
 
 export * from './TwitchVideo';
 

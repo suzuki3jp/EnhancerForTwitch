@@ -10,6 +10,7 @@ export class TwitchVideo {
   protected player: Element<HTMLVideoElement>;
   protected slider: Element<HTMLInputElement>;
 
+  private isMute: false | number;
   constructor() {
     this.player = new Element(this.PLAYER_QUERY);
     this.slider = new Element(this.VOLUMESLIDER_QUERY);
@@ -40,17 +41,37 @@ export class TwitchVideo {
     const currentVolume = this.getCurrentVolume();
     let newVolume = currentVolume - 1;
 
-    if (newVolume < 0) newVolume = 0;
+    if (newVolume < 0) {
+      newVolume = 0;
+      this.isMute = currentVolume;
+    }
 
     this.changeVolume(newVolume);
     return newVolume;
+  }
+
+  public toggleMute(): number {
+    if (this.isMute) {
+      // unmute
+      const newVolume = this.isMute;
+      this.isMute = false;
+
+      this.changeVolume(newVolume);
+      return newVolume;
+    } else {
+      // mute
+      const currentVolume = this.getCurrentVolume();
+      this.isMute = currentVolume;
+      this.changeVideoVolume(0);
+      this.changeVolumeSlider(0);
+      return 0;
+    }
   }
 
   public changeVolume(volume: number) {
     const decimalVolume = volume / 100;
     this.changeVideoVolume(decimalVolume);
     this.changeVolumeSlider(decimalVolume);
-    this.changeVolumeLocalStrage(decimalVolume);
   }
 
   private changeVideoVolume(decimalVolume: number) {
@@ -68,9 +89,5 @@ export class TwitchVideo {
 
     const inputEvent = new Event('input', { bubbles: true, cancelable: true });
     this.slider.element.dispatchEvent(inputEvent);
-  }
-
-  private changeVolumeLocalStrage(decimalVolume: number) {
-    localStorage.setItem('volume', `${decimalVolume}`);
   }
 }
