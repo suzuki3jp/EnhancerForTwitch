@@ -1,6 +1,6 @@
 import { TwitchVideo } from './TwitchVideo';
 import { VolumeOverlay } from './VolumeOverlay';
-import { Scroll } from './Scroll';
+import { MouseControl } from './MouseControl';
 
 /**
  * Twitchの音量をスクロールで管理する
@@ -9,7 +9,7 @@ export class VolumeController {
   constructor() {
     const video = new TwitchVideo();
     const overlay = new VolumeOverlay();
-    const scroll = new Scroll();
+    const scroll = new MouseControl();
 
     scroll.addEventListener('start', () => overlay.showOverlay());
     scroll.addEventListener('end', () => overlay.hideOverlay());

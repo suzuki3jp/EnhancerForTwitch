@@ -1,9 +1,9 @@
 import { TwitchVideo } from './TwitchVideo';
 
 /**
- * 特定要素上のスクロールを管理するクラス
+ * 特定要素上のマウス操作を管理するクラス
  */
-export class Scroll extends TwitchVideo {
+export class MouseControl extends TwitchVideo {
   private readonly RIGHTCLICK_KEYCODE = 2;
 
   private listeners: Record<ScrollEvents, ScrollEventListener[]>;
