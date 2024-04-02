@@ -1,5 +1,5 @@
 import { RightClickScroll } from './RightClickScroll';
-import { TwitchVideo } from './TwitchVideo';
+import { TwitchVideo } from './modules';
 import { VolumeOverlay } from './VolumeOverlay';
 
 const main = () => {

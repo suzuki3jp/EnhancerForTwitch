@@ -1,20 +1,33 @@
+import { Element } from './Element';
+
+/**
+ * Twitchのビデオに関するクラス
+ */
 export class TwitchVideo {
   private readonly PLAYER_QUERY = 'video';
   private readonly VOLUMESLIDER_QUERY = '[id^="player-volume-slider"]';
 
-  private player: HTMLVideoElement;
+  private player: Element<HTMLVideoElement>;
+  private slider: Element<HTMLInputElement>;
 
   constructor() {
-    this.player = this.getCurrentVideo();
-    if (!this.player) console.error('EnhancerForTwitchError: Get video player failed.');
+    this.player = new Element(this.PLAYER_QUERY);
+    this.slider = new Element(this.VOLUMESLIDER_QUERY);
   }
 
-  public getCurrentVolume() {
-    return this.player.volume;
+  /**
+   * 現在のボリュームを取得する。
+   * 0~100の形で返却し、**切り捨てを行わない**
+   * @returns
+   */
+  public getCurrentVolume(): number | null {
+    if (!this.player.element) return null;
+    const volume = this.player.element.volume;
+    return volume * 100;
   }
 
   public incrementVolume() {
-    const currentVolume = this.player.volume * 100;
+    const currentVolume = this.getCurrentVolume();
     let newVolume = currentVolume + 1;
 
     if (newVolume > 100) newVolume = 100;
@@ -22,11 +35,13 @@ export class TwitchVideo {
     this.changeVolume(newVolume);
     return newVolume;
   }
+
   public decrementVolume() {
-    const currentVolume = this.player.volume * 100;
+    const currentVolume = this.getCurrentVolume();
     let newVolume = currentVolume - 1;
 
     if (newVolume < 0) newVolume = 0;
+
     this.changeVolume(newVolume);
     return newVolume;
   }
@@ -39,25 +54,23 @@ export class TwitchVideo {
   }
 
   private changeVideoVolume(decimalVolume: number) {
-    this.player.volume = decimalVolume;
+    if (!this.player.element) return;
+    this.player.element.volume = decimalVolume;
   }
 
   private changeVolumeSlider(decimalVolume: number) {
+    if (!this.slider.element) return;
     decimalVolume = parseFloat(decimalVolume.toFixed(2));
-    const slider = document.querySelector<HTMLInputElement>(this.VOLUMESLIDER_QUERY);
-    slider.value = `${decimalVolume}`;
-    slider.setAttribute('aria-valuenow', `${Math.round(decimalVolume * 100)}`);
-    slider.setAttribute('aria-valuetext', `${Math.round(decimalVolume * 100)}`);
+
+    this.slider.element.value = `${decimalVolume}`;
+    this.slider.element.setAttribute('aria-valuenow', `${Math.round(decimalVolume * 100)}`);
+    this.slider.element.setAttribute('aria-valuetext', `${Math.round(decimalVolume * 100)}`);
 
     const inputEvent = new Event('input', { bubbles: true, cancelable: true });
-    slider.dispatchEvent(inputEvent);
+    this.slider.element.dispatchEvent(inputEvent);
   }
 
   private changeVolumeLocalStrage(decimalVolume: number) {
     localStorage.setItem('volume', `${decimalVolume}`);
-  }
-
-  private getCurrentVideo() {
-    return document.body.querySelector(this.PLAYER_QUERY);
   }
 }
