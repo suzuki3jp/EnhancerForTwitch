@@ -183,7 +183,7 @@ class VolumeOverlay {
   }
 }
 
-(() => {
+const main = () => {
   const currentLocation = new URL(location.href);
   const locationWhitelist = ['www.twitch.tv'];
 
@@ -207,4 +207,21 @@ class VolumeOverlay {
       },
     });
   }
-})();
+};
+
+const tryCatchMain = () => {
+  try {
+    main();
+  } catch (error) {
+    console.log(error);
+    sleep(1_000).then(() => {
+      tryCatchMain();
+    });
+  }
+};
+
+tryCatchMain();
+
+function sleep(ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
