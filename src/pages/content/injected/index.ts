@@ -214,8 +214,9 @@ const tryCatchMain = () => {
     main();
   } catch (error) {
     console.log(error);
-    sleep(1_000);
-    tryCatchMain();
+    sleep(1_000).then(() => {
+      tryCatchMain();
+    });
   }
 };
 
