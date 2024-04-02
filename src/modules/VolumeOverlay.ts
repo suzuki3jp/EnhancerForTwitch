@@ -51,6 +51,7 @@ export class VolumeOverlay {
     overlay.style.textAlign = 'center';
     overlay.style.verticalAlign = 'middle';
     overlay.style.fontSize = '1.3vw';
+    overlay.style.userSelect = 'none';
     return overlay;
   }
 }
