@@ -50,7 +50,7 @@ export class VolumeOverlay {
     overlay.style.width = '100%';
     overlay.style.textAlign = 'center';
     overlay.style.verticalAlign = 'middle';
-    overlay.style.fontSize = '25px';
+    overlay.style.fontSize = '1.3vw';
     return overlay;
   }
 }
