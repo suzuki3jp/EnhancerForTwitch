@@ -7,8 +7,8 @@ export class TwitchVideo {
   private readonly PLAYER_QUERY = 'video';
   private readonly VOLUMESLIDER_QUERY = '[id^="player-volume-slider"]';
 
-  private player: Element<HTMLVideoElement>;
-  private slider: Element<HTMLInputElement>;
+  protected player: Element<HTMLVideoElement>;
+  protected slider: Element<HTMLInputElement>;
 
   constructor() {
     this.player = new Element(this.PLAYER_QUERY);
