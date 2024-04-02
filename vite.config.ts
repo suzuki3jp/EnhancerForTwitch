@@ -6,7 +6,6 @@ import { getCacheInvalidationKey, getPlugins } from './utils/vite';
 
 const rootDir = resolve(__dirname);
 const srcDir = resolve(rootDir, 'src');
-const pagesDir = resolve(srcDir, 'pages');
 
 const isDev = process.env.__DEV__ === 'true';
 const isProduction = !isDev;
@@ -17,7 +16,6 @@ export default defineConfig({
       '@root': rootDir,
       '@src': srcDir,
       '@assets': resolve(srcDir, 'assets'),
-      '@pages': pagesDir,
     },
   },
   plugins: [...getPlugins(isDev), react()],
@@ -32,10 +30,10 @@ export default defineConfig({
     emptyOutDir: !isDev,
     rollupOptions: {
       input: {
-        contentInjected: resolve(pagesDir, 'content', 'injected', 'index.ts'),
+        contentScripts: resolve(srcDir, 'contentScripts.ts'),
       },
       output: {
-        entryFileNames: 'src/pages/[name]/index.js',
+        entryFileNames: 'src/[name].js',
         chunkFileNames: isDev ? 'assets/js/[name].js' : 'assets/js/[name].[hash].js',
         assetFileNames: assetInfo => {
           const { name } = path.parse(assetInfo.name);

@@ -19,7 +19,7 @@ const manifest = {
   content_scripts: [
     {
       matches: ['http://*/*', 'https://*/*', '<all_urls>'],
-      js: ['src/pages/contentInjected/index.js'],
+      js: ['src/contentScripts.js'],
     },
   ],
   web_accessible_resources: [
