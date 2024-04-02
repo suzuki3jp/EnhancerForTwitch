@@ -50,7 +50,6 @@ export class TwitchVideo {
     const decimalVolume = volume / 100;
     this.changeVideoVolume(decimalVolume);
     this.changeVolumeSlider(decimalVolume);
-    this.changeVolumeLocalStrage(decimalVolume);
   }
 
   private changeVideoVolume(decimalVolume: number) {
@@ -68,9 +67,5 @@ export class TwitchVideo {
 
     const inputEvent = new Event('input', { bubbles: true, cancelable: true });
     this.slider.element.dispatchEvent(inputEvent);
-  }
-
-  private changeVolumeLocalStrage(decimalVolume: number) {
-    localStorage.setItem('volume', `${decimalVolume}`);
   }
 }
